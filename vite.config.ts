@@ -12,19 +12,18 @@ const postPreview = () => ({
     server.middlewares.use(
       (req: Connect.IncomingMessage, res: ServerResponse, next: Function) => {
         if (req.method === "POST") {
-          console.warn("URL: ", req.url);
+          console.warn(`Received POST request for URL "${req.url}"`);
 
           const form = new Form();
-          form.parse(req, function (err, fields, files) {
-            const debugOutput = inspect({ fields: fields, files: files }, false, 3);;
-
+          form.parse(req, (err: Error, fields: any, files: any) => {
             // Console logging
-            console.log("Form data:", debugOutput);
+            console.log(
+              inspect({ fields: fields, files: files }, false, 3, true)
+            );
 
             // Debug response
-            res.writeHead(200, { "content-type": "text/plain" });
-            res.write("Form data:\n\n");
-            res.end(debugOutput);
+            res.writeHead(200, { "Content-Type": "text/plain" });
+            res.end(inspect({ fields: fields, files: files }, false, 3, false));
           });
         } else { 
           next();

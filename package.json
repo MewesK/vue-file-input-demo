@@ -16,6 +16,7 @@
     "vue": "^3.2.37"
   },
   "devDependencies": {
+    "@types/multiparty": "0.0.33",
     "@types/node": "^18.14.6",
     "@vitejs/plugin-vue": "^3.0.3",
     "eslint": "^8.11.0",
