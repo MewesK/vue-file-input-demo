@@ -26,6 +26,28 @@ export default defineComponent({
         console.log('submitted => ', key, value);
       }
     },
+    submitFancyHandler(event: Event) {
+      const formData = new FormData(event.target as HTMLFormElement);
+
+      // Output form data
+      for (const [key, value] of formData) {
+        console.log('submitted => ', key, value);
+      }
+
+      const xhr = new XMLHttpRequest();
+      xhr.addEventListener('readystatechange', () => {
+        if (xhr.readyState === 4) {
+          console.log('response => ', xhr.response);
+        }
+      })
+      xhr.upload.addEventListener('progress', (event: ProgressEvent) => {
+        if (event.lengthComputable) {
+          console.log('progress => ', `${event.loaded} of ${event.total} bytes`);
+        }
+      })
+      xhr.open('POST', '/');
+      xhr.send(formData);
+    },
   },
   watch: {
     avatar1(value: FileList | null) {
